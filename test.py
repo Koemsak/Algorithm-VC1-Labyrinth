@@ -1,142 +1,73 @@
-#  IMPORTS
-from tkinter import *
+import tkinter as tk
 
-#  CONSTANTS
-SCREEN_WIDTH = 700
-SCREEN_HEIGHT = 700
+#_________________Ball_____________________________
 
-#  VARIABLES
-grid = [[0,0,0,1,0,0,0], [0,0,0,0,0,0,0], [0,0,0,0,0,0,0], [0,0,0,0,0,0,0], [0,0,0,0,0,0,0], [0,0,0,0,0,0,0], [0,0,0,0,0,0,0]]
+x_speed = 0 
+y_speed = 10 
 
-# squareSize = #choose the appropriate size of the squares
+#_________________Size of screen____________________
 
-SQUARE_WIDTH = 100
-SQUARE_HEIGHT = 100
+screenWidth = 600
+screenHeight = 600
 
-#  Function
+#_________________Functions to move__________________
 
-def arrayToDrawing():
-    # draw a line with white and black squares using the global array
-    global grid
-    for row in range(len(grid)):
-        for col in range(len(grid[row])):
-            if grid[row][col] == 1:
-                canvas.create_rectangle(col * SQUARE_WIDTH, row * SQUARE_HEIGHT, (col + 1) * SQUARE_WIDTH, (row + 1) * SQUARE_HEIGHT, fill = 'green')
-                # canvas.create_image((col * SQUARE_WIDTH)+50, (row * SQUARE_HEIGHT)+50, anchor=CENTER, image=img)
-                
-            else:
-                canvas.create_rectangle(col * SQUARE_WIDTH, row * SQUARE_HEIGHT, (col + 1) * SQUARE_WIDTH, (row + 1) * SQUARE_HEIGHT, fill = 'gray')
+def goUp(event):
+    global x_speed, y_speed
+    y_speed = -10
+    x_speed = 0
+
+def goDown(event):
+    global x_speed, y_speed
+    y_speed = 10
+    x_speed = 0
+
+def goLeft(event):
+    global x_speed, y_speed
+    y_speed = 0
+    x_speed = -10
+
+def goRight(event):
+    global x_speed, y_speed
+    y_speed = 0
+    x_speed = 10
+
+def move_oval():
+    global x_speed, y_speed
     
-# To get index of Number one to analyse that can move or not    
-def getIndexOfOne(array):
-    for row in range(len(grid)):
-        for col in range(len(grid[row])):
-            if grid[row][col] == 1:
-                indexOfOne = [row, col]
-    return indexOfOne
+    (left_position, top_position, right_position, bottom_position)  = canvas.coords(oval)
 
+    if (right_position >= screenWidth) or (left_position <= 0):
+        x_speed = -x_speed
 
+    elif (bottom_position >= screenHeight) or (top_position <= 0):
+        y_speed = -y_speed
 
-# To move left by key 
-def onKeyleft(event):
-    moveLeft()
-
-# To move right by key
-def onKeyRight(event):
-    moveRight()
-
-# To move up by key 
-def onKeyUp(event):
-    moveUp()
-
-# To move down by key
-def onKeyDown(event):
-    moveDown()
-
-
-
-# To move left by button
-def moveLeft():
-    global grid 
-    indexOfOne = getIndexOfOne(grid)
-    rowOfOne = indexOfOne[0]
-    colOfOne = indexOfOne[1]
-    if  colOfOne != 0:
-            grid[rowOfOne][colOfOne] = 0
-            grid[rowOfOne][colOfOne - 1] = 1
-
-    canvas.delete("all")
-    arrayToDrawing()
-
-# To move right by button
-def moveRight():
-    global grid
-    indexOfOne = getIndexOfOne(grid)
-    rowOfOne = indexOfOne[0]
-    colOfOne = indexOfOne[1]
-    if  colOfOne != (len(grid[rowOfOne]) - 1):
-            grid[rowOfOne][colOfOne] = 0
-            grid[rowOfOne][colOfOne + 1] = 1
+    canvas.move(oval, x_speed, y_speed)
+    canvas.after(50, move_oval)
     
-    canvas.delete("all")
-    arrayToDrawing()
 
-    
-# To move up by button
-def moveUp():
-    global grid 
-    indexOfOne = getIndexOfOne(grid)
-    rowOfOne = indexOfOne[0]
-    colOfOne = indexOfOne[1]
-    if  rowOfOne != 0:
-            grid[rowOfOne][colOfOne] = 0
-            grid[rowOfOne - 1][colOfOne] = 1
+#________________Create an empty window_____________________________________
 
-    canvas.delete("all")
-    arrayToDrawing()
-
-# To move down by button 
-def moveDown():
-    global grid 
-    indexOfOne = getIndexOfOne(grid)
-    rowOfOne = indexOfOne[0]
-    colOfOne = indexOfOne[1]
-    if  rowOfOne != (len(grid) - 1):
-            grid[rowOfOne][colOfOne] = 0
-            grid[rowOfOne + 1][colOfOne] = 1
-
-    canvas.delete("all")
-    arrayToDrawing()
-
-
-
-# Create a window to display
-root = Tk()
-root.geometry(str(SCREEN_WIDTH)+"x"+str(SCREEN_HEIGHT))
+root = tk.Tk()
+root.geometry(str(screenWidth) + 'x' + str(screenHeight))
+root.title('Pro-Developer')
 root.resizable(False, False)
-canvas = Canvas(root)
+canvas = tk.Canvas(root)
+canvas.pack(expand=True, fill='both')
 
+#________________The first oval______________________________________________
 
-# Buttons to move
-# leftButton = tk.Button(root, text ="Move Right", command = moveRight)
-# rightButton = tk.Button(root, text ="Move Left", command = moveLeft)
-# upButton = tk.Button(root, text ="Move Up", command = moveUp)
-# downButton = tk.Button(root, text ="Move Down", command = moveDown)
+oval = canvas.create_oval(270, 270, 330, 330, fill = 'green')
 
-# Arrow keys to move
-root.bind('<Left>', onKeyleft)
-root.bind('<Right>', onKeyRight)
-root.bind('<Up>', onKeyUp)
-root.bind('<Down>', onKeyDown)
+#________________Start moving!________________________________________________
 
+move_oval()
 
-canvas.pack(expand=True, fill="both")
-# leftButton.pack()
-# rightButton.pack()
-# upButton.pack()
-# downButton.pack()
-# img = PhotoImage(file="C:\\Users\\thon.theng\\Desktop\\Python\\Thurs_18_02\\mario2.gif")
+#________________Controll by keys____________________________________________
+root.bind('<Up>', goUp)
+root.bind('<Down>', goDown)
+root.bind('<Right>', goRight)
+root.bind('<Left>', goLeft)
 
-arrayToDrawing()
 root.mainloop()
-
