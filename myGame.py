@@ -165,7 +165,7 @@ def moveEnemy():
 
     canvas.delete('all')
     mySquare()
-    canvas.after(400, moveEnemy)
+    canvas.after(450, moveEnemy)
     if not notFinished:
         clean()
         yourScore()
