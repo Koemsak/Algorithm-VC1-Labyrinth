@@ -1,5 +1,7 @@
 import tkinter as tk
 import random
+import winsound
+
 
 
 
@@ -12,7 +14,6 @@ canvas = tk.Canvas(root)
 #-----------------------------*CREATE GRID OF GAME*---------------------------------------
 countCoins = 0
 notFinished = True
-notWin = True
 choiceToMove = []
 indexOfPlayer = []
 
@@ -40,7 +41,7 @@ grid = [
 #-----------------------------*CREATE FUNCTION TO DRAW GIRD*---------------------------------------
 
 def  mySquare():
-    global myScore, enemy, pacMan
+    global myScore, enemy, pacMan, notFinished
     myScore = 'SCORE: ' + str(countCoins)
     for row in range(len(grid)):
         for  col in  range(len(grid[row])):
@@ -60,6 +61,8 @@ def  mySquare():
             elif grid[row][col] == 4:
                 enemy = canvas.create_image(x1, y1, image=theEnemy,anchor='nw')
     canvas.create_text(250, 25, text=myScore, font=('consolas', 24, 'bold'), fill='#e0e0e0')
+    # if notFinished:
+    #     winsound.PlaySound("secret4.wav",winsound.SND_FILENAME | winsound.SND_ASYNC)
 
 
 #-----------------------------*FUNCTION TO FIND INDEX OF PLAYER*---------------------------------------
@@ -74,6 +77,17 @@ def indexOfPac(grid):
 
 
 #-----------------------------*END GAME WITH RESULT LOST (GAME OVER) AND WIN*---------------------------------------
+Islose = True
+isWin = True
+def gameOver():
+    global Islose
+    if Islose:
+        Islose=False
+        winsound.PlaySound("gameover1.wav",winsound.SND_FILENAME | winsound.SND_ASYNC)
+def gameWin():
+    global isWin
+    if isWin:
+        winsound.PlaySound("win.wav",winsound.SND_FILENAME | winsound.SND_ASYNC)
 
 def clean():
     global grid
@@ -87,9 +101,11 @@ def yourScore():
         if countCoins != 750:
             canvas.create_image(0, 0, image=overGame, anchor='nw')
             canvas.create_text(600,450, text="Your Score "+str(countCoins), font=(('couriernew'), 38, 'bold'), fill='#2196f3')
+            gameOver()
         else:
             canvas.create_image(0, 0, image=win, anchor='nw')
             canvas.create_text(600, 470, text="YOU WIN", font=(('consolas'), 48, 'bold'), fill='#b71c1c')
+            gameWin()
 
 
 #-----------------------------*FUNCTION TO FIND INDEX OF ENEMY*---------------------------------------
@@ -193,6 +209,7 @@ def moveLeft(event):
             grid[rowNum][colNum] = 0
             if grid[rowNum][colNum-1] == 2:
                 countCoins += 10
+                winsound.PlaySound("theSound.wav",winsound.SND_FILENAME | winsound.SND_ASYNC)
             if grid[rowNum][colNum-1] == 4:
                 notFinished = False
                 clean()
@@ -224,6 +241,7 @@ def moveRight(event):
             grid[rowNum][colNum] = 0
             if grid[rowNum][colNum+1] == 2:
                 countCoins += 10
+                winsound.PlaySound("theSound.wav",winsound.SND_FILENAME | winsound.SND_ASYNC)
             if grid[rowNum][colNum+1] == 4:
                 notFinished = False
                 clean()
@@ -252,6 +270,7 @@ def moveUp(event):
             grid[rowNum][colNum] = 0
             if grid[rowNum-1][colNum] == 2:
                 countCoins += 10
+                winsound.PlaySound("theSound.wav",winsound.SND_FILENAME | winsound.SND_ASYNC)
             if grid[rowNum-1][colNum] == 4:
                 notFinished = False
                 clean()
@@ -284,6 +303,7 @@ def moveDown(event):
             grid[rowNum][colNum] = 0
             if grid[rowNum+1][colNum] == 2:
                 countCoins += 10
+                winsound.PlaySound("theSound.wav",winsound.SND_FILENAME | winsound.SND_ASYNC)
             if grid[rowNum+1][colNum] == 4:
                 notFinished = False
                 clean()
