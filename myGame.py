@@ -83,11 +83,11 @@ def gameOver():
     global Islose
     if Islose:
         Islose=False
-        winsound.PlaySound("gameover1.wav",winsound.SND_FILENAME | winsound.SND_ASYNC)
+        winsound.PlaySound("sounds/gameover1.wav",winsound.SND_FILENAME | winsound.SND_ASYNC)
 def gameWin():
     global isWin
     if isWin:
-        winsound.PlaySound("win.wav",winsound.SND_FILENAME | winsound.SND_ASYNC)
+        winsound.PlaySound("sounds/win.wav",winsound.SND_FILENAME | winsound.SND_ASYNC)
 
 def clean():
     global grid
@@ -209,7 +209,7 @@ def moveLeft(event):
             grid[rowNum][colNum] = 0
             if grid[rowNum][colNum-1] == 2:
                 countCoins += 10
-                winsound.PlaySound("theSound.wav",winsound.SND_FILENAME | winsound.SND_ASYNC)
+                winsound.PlaySound("sounds/theSound.wav",winsound.SND_FILENAME | winsound.SND_ASYNC)
             if grid[rowNum][colNum-1] == 4:
                 notFinished = False
                 clean()
@@ -241,7 +241,7 @@ def moveRight(event):
             grid[rowNum][colNum] = 0
             if grid[rowNum][colNum+1] == 2:
                 countCoins += 10
-                winsound.PlaySound("theSound.wav",winsound.SND_FILENAME | winsound.SND_ASYNC)
+                winsound.PlaySound("sounds/theSound.wav",winsound.SND_FILENAME | winsound.SND_ASYNC)
             if grid[rowNum][colNum+1] == 4:
                 notFinished = False
                 clean()
@@ -270,7 +270,7 @@ def moveUp(event):
             grid[rowNum][colNum] = 0
             if grid[rowNum-1][colNum] == 2:
                 countCoins += 10
-                winsound.PlaySound("theSound.wav",winsound.SND_FILENAME | winsound.SND_ASYNC)
+                winsound.PlaySound("sounds/theSound.wav",winsound.SND_FILENAME | winsound.SND_ASYNC)
             if grid[rowNum-1][colNum] == 4:
                 notFinished = False
                 clean()
@@ -303,7 +303,7 @@ def moveDown(event):
             grid[rowNum][colNum] = 0
             if grid[rowNum+1][colNum] == 2:
                 countCoins += 10
-                winsound.PlaySound("theSound.wav",winsound.SND_FILENAME | winsound.SND_ASYNC)
+                winsound.PlaySound("sounds/theSound.wav",winsound.SND_FILENAME | winsound.SND_ASYNC)
             if grid[rowNum+1][colNum] == 4:
                 notFinished = False
                 clean()
@@ -326,12 +326,12 @@ def moveDown(event):
 #-----------------------------*PUT IMAGE TO SHOW ON INTERFACE*---------------------------------------
 
 
-wall = tk.PhotoImage(file='walls.png')
-myCoin = tk.PhotoImage(file='coin.png')
-myPac = tk.PhotoImage(file='male.png')
-theEnemy = tk.PhotoImage(file='enemy.png')
-overGame = tk.PhotoImage(file='over.png')
-win = tk.PhotoImage(file='youWin.png')
+wall = tk.PhotoImage(file='images/walls.png')
+myCoin = tk.PhotoImage(file='images/coin.png')
+myPac = tk.PhotoImage(file='images/male.png')
+theEnemy = tk.PhotoImage(file='images/enemy.png')
+overGame = tk.PhotoImage(file='images/over.png')
+win = tk.PhotoImage(file='images/youWin.png')
 
 
 #-----------------------------*USE KEY LEFT, RIGHT, UP, DOWN TO MOVE PACMAN*---------------------------------------
